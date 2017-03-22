@@ -80,7 +80,14 @@ for child in tree.iter():
 	if(child.tag == 'created_at'):
 		datesFile.write('%s:%s\n' % (child.text, currId))
 	
-	# gets whole record for tweets.txt
+	# gets whole record
+	if(child.tag == 'status'):
+		tweetsFile.write('%s:%s\n' % (currId, record))
+	else:
+		if (record is None):
+			record = child.text
+		else:
+			record += child.text
 	
 
 
