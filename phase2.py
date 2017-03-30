@@ -10,3 +10,10 @@ os.system("db_load -T -t hash -f tweetsOP.txt tweets.db")
 os.system("db_load -T -t btree -f termsOP.txt terms.db")
 os.system("db_load -T -t btree -f dateOP.txt dates.db")
 
+#######################
+# extra db_dump for verification
+
+os.system("db_dump -k -d a -f tweetdecomp.txt tweets.db")
+os.system("db_dump -k -d a -f termdecomp.txt terms.db")
+os.system("db_dump -k -d a -f datedecomp.txt dates.db")
+
