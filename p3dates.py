@@ -25,9 +25,33 @@ def exactDate(date):
     closeDateDB(database, cur)
     return ids
 
-ids = exactDate("2012/03/11")
-print(len(ids))
-for id in ids:
-    print(id.decode("utf-8"))
+def lessThanDate(date):
+    database, cur = openDateDB()
+    ids = []
+    iter = cur.first()
+    while iter:
+        idate = iter[0]
+        if idate.decode("utf-8") < date:
+            ids.append(iter[1])
+        iter = cur.next()
+    closeDateDB(database,cur)
+    return ids
+
+def greaterThanDate(date):
+    database, cur = openDateDB()
+    ids = []
+    iter = cur.first()
+    while iter:
+        idate = iter[0]
+        if idate.decode("utf-8") < date:
+            ids.append(iter[1])
+        iter = cur.next()
+    closeDateDB(database,cur)
+    return ids
+
+#ids = exactDate("2012/03/11")
+#print(len(ids))
+#for id in ids:
+#    print(id.decode("utf-8"))
     
             
