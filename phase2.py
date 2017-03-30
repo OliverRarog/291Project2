@@ -7,8 +7,8 @@ os.system("perl break.pl < tweets.txt > tweetsOP.txt")
 os.system("perl break.pl < terms.txt > termsOP.txt")
 os.system("perl break.pl < dates.txt > dateOP.txt")
 os.system("db_load -T -t hash -f tweetsOP.txt tw.idx")
-os.system("db_load -T -t btree -f termsOP.txt te.idx")
-os.system("db_load -T -t btree -f dateOP.txt da.idx")
+os.system("db_load -c duplicates=1 -T -t btree -f termsOP.txt te.idx")
+os.system("db_load -c duplicates=1 -T -t btree -f dateOP.txt da.idx")
 
 #######################
 # extra db_dump for verification
