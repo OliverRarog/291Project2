@@ -64,7 +64,7 @@ for child in tree.iter():
 		currId = child.text
 		record = currId + ":<status>"
 		Ids.append(currId)
-	if(child.text is None):
+	if(child.txt is None):
 			continue
 	# this block writes the terms.txt file	
 	if(child.tag == 'text'):
