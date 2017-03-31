@@ -64,7 +64,7 @@ for child in tree.iter():
 		currId = child.text
 		record = currId + ":<status>"
 		Ids.append(currId)
-	if(child.txt is None):
+	if(child.text is None):
 			continue
 	# this block writes the terms.txt file	
 	if(child.tag == 'text'):
@@ -93,6 +93,7 @@ while(not line.startswith("<status>")):
 for Id in Ids:
 	record = Id + ":" + line
 	tweetsFile.write(record)
+	line = inputFile.readline()
 
 
 

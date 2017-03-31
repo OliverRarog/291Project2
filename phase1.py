@@ -93,9 +93,4 @@ while(not line.startswith("<status>")):
 for Id in Ids:
 	record = Id + ":" + line
 	tweetsFile.write(record)
-
-
-
-
-
-
+	line = inputFile.readline()
