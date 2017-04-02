@@ -1,5 +1,5 @@
 from bsddb3 import db
-import fnmatch
+import re
 
 def openTermsDB():
     database = db.DB()
@@ -67,7 +67,8 @@ def returnAny(text):
     while iter:
         rText = iter[0]
         if rText.decode("utf-8") == textLoc or rText.decode("utf-8") == textName or rText.decode("utf-8") == textText:
-            ids.append(iter[1])
+            if iter[1] not in ids:
+                ids.append(iter[1])
         iter = cur.next()
    
     closeTermsDB(database, cur)
@@ -77,14 +78,16 @@ def returnWildcard(text):
     database, cur = openTermsDB()
     ids = []
     iter = cur.first()
-    textText = "t-" + text + "*"
-    
+
+    regex = "t-" + text + "*"
+ 
+    print(regex)
     while iter:
         rText = iter[0].decode("utf-8")
-        filtered = fnmatch.filter(rText, textText)
-#        print(filtered)
-#        if rText.decode("utf-8") == :
-#            ids.append(iter[1])
+        m = re.match(regex,rText)
+        if m:
+            if iter[1] not in ids:
+                ids.append(iter[1])
         iter = cur.next()
    
     closeTermsDB(database, cur)
@@ -97,24 +100,24 @@ idt = returnText("played")
 idn = returnName("nurse")
 idl = returnLocation("germany")
 ida = returnAny("germany")
-idw = returnWildcard("germ")
+idw = returnWildcard("ge")
 
-print("idt: played")
-for id in idt:
-    print(id.decode("utf-8"))
-
-print("idn: nurse")
-for id in idn:
-    print(id.decode("utf-8"))
-
-print("idl: germany")
-for id in idl:
-    print(id.decode("utf-8"))
-
-print("ida: germany")
-for id in ida:
-    print(id.decode("utf-8"))
-
-print("idw: germ")
+#print("idt: played")
+#for id in idt:
+#    print(id.decode("utf-8"))
+#
+#print("idn: nurse")
+#for id in idn:
+#    print(id.decode("utf-8"))
+#
+#print("idl: germany")
+#for id in idl:
+#    print(id.decode("utf-8"))
+#
+#print("ida: germany")
+#for id in ida:
+#    print(id.decode("utf-8"))
+#
+print("idw: ge")
 for id in idw:
     print(id.decode("utf-8"))
