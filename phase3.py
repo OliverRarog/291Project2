@@ -1,40 +1,40 @@
 import xml.etree.ElementTree as ET
-import re, sys
-from bsddb3 import db
+import re, sys, p3terms, p3dates
+#from bsddb3 import db
 
 #id as a byte literal
 #finds the data for the ids given
 #prints the data
 #probably needs to be debugged
-def results(bid):
-    database = db.DB()
-    database.open("tw.idx")
-    cur = database.cursor()
-    iter = cur.first()
-    while iter:
-        iid = iter[0]
-        if iid == bid:
-            root = ET.fromstring(iter[1].decode("utf-8"))
-            for child in root.iter():
-                if(child.text != None):
-                    if(child.tag == 'id'):
-                        print("Id: " + child.text)
-                    if(child.tag == 'created_at'):
-                        print("Created at: " + child.text)
-                    if(child.tag == 'text'):
-                        print("Text: " + child.text)
-                    if(child.tag == 'name'):
-                        print("Name: " + child.text)
-                    if(child.tag == 'location'):
-                        print("Location: " + child.text)
-                    if(child.tag == 'description'):
-                        print("Description: " + child.text)
-                    if(child.tag == 'url'):
-                        print("URL: " + child.text)
-            print("")
-        iter = cur.next()
-    cur.close()
-    database.close()
+# def results(bid):
+#     database = db.DB()
+#     database.open("tw.idx")
+#     cur = database.cursor()
+#     iter = cur.first()
+#     while iter:
+#         iid = iter[0]
+#         if iid == bid:
+#             root = ET.fromstring(iter[1].decode("utf-8"))
+#             for child in root.iter():
+#                 if(child.text != None):
+#                     if(child.tag == 'id'):
+#                         print("Id: " + child.text)
+#                     if(child.tag == 'created_at'):
+#                         print("Created at: " + child.text)
+#                     if(child.tag == 'text'):
+#                         print("Text: " + child.text)
+#                     if(child.tag == 'name'):
+#                         print("Name: " + child.text)
+#                     if(child.tag == 'location'):
+#                         print("Location: " + child.text)
+#                     if(child.tag == 'description'):
+#                         print("Description: " + child.text)
+#                     if(child.tag == 'url'):
+#                         print("URL: " + child.text)
+#             print("")
+#         iter = cur.next()
+#     cur.close()
+#     database.close()
 
 # checks if query is YYYY/MM/DD
 def validateDateFormat(date):
@@ -53,7 +53,8 @@ def interface():
         queries = queryStr.split()
         if(queryStr == 'exit'):
             sys.exit(0)
-
+        i = 0
+        idArrays = []
         for query in queries:
             if(query.startswith("text:")):
                 query = query[5:]
@@ -63,6 +64,7 @@ def interface():
                     print('Reject query text:%s as it contains non alphanumeric characters!' % query)
                     continue
                 # do text matching
+                idArrays[i] = returnText(query)
                 
             
             elif (query.startswith("name:")):
@@ -73,6 +75,7 @@ def interface():
                     print('Reject query name:%s as it contains non alphanumeric characters!' % query)
                     continue
                 # do name matching
+                idArray[i] = returnName(query)
                 
             
             elif (query.startswith("location:")):
@@ -83,6 +86,7 @@ def interface():
                     print('Reject query location:%s as it contains non alphanumeric characters!' % query)
                     continue
                 # do location matching
+                idArray[i] = returnLocation(query)
                 
             
             elif (query.startswith("date:")):
@@ -91,6 +95,7 @@ def interface():
                     print('Reject query date:%s! All dates must be in the form YYYY/MM/DD' % query)
                     continue
                 # do exacte date matching
+                idArrays[i] = p3dates.exacteDate(query)
             
             elif (query.startswith("date<")):
                 query = query[5:]
@@ -98,6 +103,7 @@ def interface():
                     print('Reject query date<%s! All dates must be in the form YYYY/MM/DD' % query)
                     continue
                 # do < date matching
+                idArrays[i] = p3dates.lessThanDate
                 
             
             elif (query.startswith("date>")):
@@ -106,6 +112,7 @@ def interface():
                     print('Reject query date>%s! All dates must be in the form YYYY/MM/DD' % query)
                     continue
                 # do > date matching
+                idArrays[i] = p3dates.greaterThanDate
 
                 
             
