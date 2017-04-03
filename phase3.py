@@ -2,10 +2,9 @@ import xml.etree.ElementTree as ET
 import re, sys, p3dates, p3terms
 from bsddb3 import db
 
-#id as a byte literal
-#finds the data for the ids given
-#prints the data
-#probably needs to be debugged
+#bid is the id as a byte literal
+#finds the data for the ids given by iterating through tw.idx
+#prints the data by extracting the info from the xml
 def results(bid):
     database = db.DB()
     database.open("tw.idx")
