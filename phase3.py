@@ -57,10 +57,10 @@ def intersectResults(idArray):
 
 def interface():
     while(1):
-        queryStr = input("Please enter your query or type 'exit' to quit: ")
+        queryStr = input("Please enter your query or type 'exit!' to quit: ")
         queryStr.strip()
         queries = queryStr.split()
-        if(queryStr == 'exit'):
+        if(queryStr == 'exit!'):
             sys.exit(0)
         
         idArrays = []
