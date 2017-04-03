@@ -10,8 +10,12 @@ def closeDateDB(database, cur):
     cur.close()
     database.close()
 
-#date is a string
+#example query: date:2011/01/01
+#input: 2011/01/01 (string)
 #returns a list of ids as byte literals
+#iterates through the database
+#if date from database = date
+#add the id from database to the return list
 def exactDate(date):
     database, cur = openDateDB()
     ids = []
@@ -25,6 +29,8 @@ def exactDate(date):
     closeDateDB(database, cur)
     return ids
 
+#example query: date<2011/01/01
+#behaves like exactDate
 def lessThanDate(date):
     database, cur = openDateDB()
     ids = []
@@ -37,6 +43,8 @@ def lessThanDate(date):
     closeDateDB(database,cur)
     return ids
 
+#example query: date>2011/01/01
+#behaves like exactDate
 def greaterThanDate(date):
     database, cur = openDateDB()
     ids = []
