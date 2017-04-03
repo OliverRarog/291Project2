@@ -121,8 +121,6 @@ def interface():
                 
             elif (query.startswith("date:")):
                 query = query[5:] # remove prefix
-                if(len(query) < 1):
-                    continue
                 if(not validateDateFormat(query)):
                     print('Rejecting query date:%s! All dates must be in the form YYYY/MM/DD' % query)
                     continue
@@ -131,8 +129,6 @@ def interface():
             
             elif (query.startswith("date<")):
                 query = query[5:] # remove prefix
-                if(len(query) < 1):
-                    continue
                 if(not validateDateFormat(query)):
                     print('Rejecting query date<%s! All dates must be in the form YYYY/MM/DD' % query)
                     continue
@@ -141,8 +137,6 @@ def interface():
                 
             elif (query.startswith("date>")):
                 query = query[5:] # remove prefix
-                if(len(query) < 1):
-                    continue
                 if(not validateDateFormat(query)):
                     print('Rejecting query date>%s! All dates must be in the form YYYY/MM/DD' % query)
                     continue
