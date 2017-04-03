@@ -85,7 +85,7 @@ def returnTextWildcard(text):
 
     regex = "t-" + text + ".*"
  
-    print(regex)
+#    print(regex)
     while iter:
         rText = iter[0].decode("utf-8")
         m = re.match(regex,rText)
@@ -105,7 +105,7 @@ def returnNameWildcard(text):
 
     regex = "n-" + text + ".*"
  
-    print(regex)
+#    print(regex)
     while iter:
         rText = iter[0].decode("utf-8")
         m = re.match(regex,rText)
@@ -125,7 +125,7 @@ def returnLocWildcard(text):
 
     regex = "l-" + text + ".*"
  
-    print(regex)
+#    print(regex)
     while iter:
         rText = iter[0].decode("utf-8")
         m = re.match(regex,rText)
