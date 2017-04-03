@@ -1,5 +1,5 @@
 import xml.etree.ElementTree as ET
-import re, sys, p3terms, p3dates
+import re, sys, p3dates#, p3terms
 from bsddb3 import db
 
 #id as a byte literal
@@ -62,7 +62,7 @@ def interface():
         queries = queryStr.split()
         if(queryStr == 'exit'):
             sys.exit(0)
-        i = 0
+        
         idArrays = []
         for query in queries:
             if(query.startswith("text:")):
@@ -77,7 +77,7 @@ def interface():
                     continue
                 # do text matching
                 else:
-                    idArrays[i] = p3terms.returnText(query)
+                    pass#idArrays.append(p3terms.returnText(query))
                 
             
             elif (query.startswith("name:")):
@@ -92,7 +92,7 @@ def interface():
                     continue
                 # do name matching
                 else:
-                    idArray[i] = p3terms.returnName(query)
+                    pass#idArray.append(p3terms.returnName(query))
                 
             elif (query.startswith("location:")):
                 query = query[9:]
@@ -106,7 +106,7 @@ def interface():
                     continue
                 # do location matching
                 else:
-                    idArray[i] = p3terms.returnLocation(query)
+                    pass#idArray.append(p3terms.returnLocation(query))
                 
             elif (query.startswith("date:")):
                 query = query[5:]
@@ -114,7 +114,7 @@ def interface():
                     print('Rejecting query date:%s! All dates must be in the form YYYY/MM/DD' % query)
                     continue
                 # do exacte date matching
-                idArrays[i] = p3dates.exacteDate(query)
+                idArrays.append(p3dates.exactDate(query))
             
             elif (query.startswith("date<")):
                 query = query[5:]
@@ -122,7 +122,7 @@ def interface():
                     print('Rejecting query date<%s! All dates must be in the form YYYY/MM/DD' % query)
                     continue
                 # do < date matching
-                idArrays[i] = p3dates.lessThanDate
+                idArrays.append(p3dates.lessThanDate(query))
                 
             elif (query.startswith("date>")):
                 query = query[5:]
@@ -130,7 +130,7 @@ def interface():
                     print('Rejecting query date>%s! All dates must be in the form YYYY/MM/DD' % query)
                     continue
                 # do > date matching
-                idArrays[i] = p3dates.greaterThanDate
+                idArrays.append(p3dates.greaterThanDate(query))
 
             else:
                 if(query[-1] == '%'):
@@ -138,18 +138,17 @@ def interface():
                         print('Non-prefixed queries must only contain alphanumeric characters! Rejecting query %s' % query)
                         continue
                     # do alphanum query matching with wildcard
-                    idArrays[i] = p3terms.returnWildcard(query[:-1])
+                    idArrays.append(p3terms.returnWildcard(query[:-1]))
                 elif(not query.isalnum()):
                     print('Non-prefixed queries must only contain alphanumeric characters! Rejecting query %s' % query)
                     continue
                 # do non-wildcard alphanum matching
                 else:
-                    idArrays[i] = p3terms.returnAny(query)
-            i += 1
+                    idArrays.append(p3terms.returnAny(query))
 
         result = intersectResults(idArrays)
         for rs in result:
-            result(rs)
+            results(rs)
 
 
 

@@ -43,7 +43,7 @@ def greaterThanDate(date):
     iter = cur.first()
     while iter:
         idate = iter[0]
-        if idate.decode("utf-8") < date:
+        if idate.decode("utf-8") > date:
             ids.append(iter[1])
         iter = cur.next()
     closeDateDB(database,cur)
