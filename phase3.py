@@ -46,6 +46,8 @@ def validateDateFormat(date):
         pass
     return False
 
+
+# given multiple result sets from multiple queries, only return ids who are common in each result set
 def intersectResults(idArray):
     if(len(idArray )< 1):
         return []
@@ -54,7 +56,7 @@ def intersectResults(idArray):
         intersected = list(set(array).intersection(intersected))
     return intersected
 
-
+# main interface
 def interface():
     while(1):
         queryStr = input("Please enter your query or type 'exit!' to quit: ")
@@ -66,7 +68,10 @@ def interface():
         idArrays = []
         for query in queries:
             if(query.startswith("text:")):
-                query = query[5:]
+                query = query[5:] # remove prefix
+                if(len(query) < 1):
+                    continue
+                # if we need to do wildcard
                 if(query[-1] == '%'):
                     if(not query[:-1].isalnum):
                         print('Query text must only contain alphanumeric characters! Rejecting query text:%s' % query)
@@ -81,7 +86,10 @@ def interface():
                 
             
             elif (query.startswith("name:")):
-                query = query[5:]
+                query = query[5:] # remove prefix
+                # if we need to do wildcard
+                if(len(query) < 1):
+                    continue
                 if(query[-1] == '%'):
                     if(not query[:-1].isalnum):
                         print('Query text must only contain alphanumeric characters! Rejecting query name:%s' % query)
@@ -95,7 +103,10 @@ def interface():
                     idArrays.append(p3terms.returnName(query.lower()))
                 
             elif (query.startswith("location:")):
-                query = query[9:]
+                query = query[9:] # remove prefix
+                # if we need to do wildcard
+                if(len(query) < 1):
+                    continue
                 if(query[-1] == '%'):
                     if(not query[:-1].isalnum):
                         print('Query text must only contain alphanumeric characters! Rejecting query location:%s' % query)
@@ -109,7 +120,9 @@ def interface():
                     idArrays.append(p3terms.returnLocation(query.lower()))
                 
             elif (query.startswith("date:")):
-                query = query[5:]
+                query = query[5:] # remove prefix
+                if(len(query) < 1):
+                    continue
                 if(not validateDateFormat(query)):
                     print('Rejecting query date:%s! All dates must be in the form YYYY/MM/DD' % query)
                     continue
@@ -117,7 +130,9 @@ def interface():
                 idArrays.append(p3dates.exactDate(query))
             
             elif (query.startswith("date<")):
-                query = query[5:]
+                query = query[5:] # remove prefix
+                if(len(query) < 1):
+                    continue
                 if(not validateDateFormat(query)):
                     print('Rejecting query date<%s! All dates must be in the form YYYY/MM/DD' % query)
                     continue
@@ -125,7 +140,9 @@ def interface():
                 idArrays.append(p3dates.lessThanDate(query))
                 
             elif (query.startswith("date>")):
-                query = query[5:]
+                query = query[5:] # remove prefix
+                if(len(query) < 1):
+                    continue
                 if(not validateDateFormat(query)):
                     print('Rejecting query date>%s! All dates must be in the form YYYY/MM/DD' % query)
                     continue
@@ -133,6 +150,8 @@ def interface():
                 idArrays.append(p3dates.greaterThanDate(query))
 
             else:
+                if(len(query) < 1):
+                    continue
                 if(query[-1] == '%'):
                     if(not query[:-1].isalnum):
                         print('Non-prefixed queries must only contain alphanumeric characters! Rejecting query %s' % query)
@@ -146,8 +165,10 @@ def interface():
                 else:
                     idArrays.append(p3terms.returnAny(query.lower()))
 
+        # get only results common to each individual query
         result = intersectResults(idArrays)
         for rs in result:
+            # print results
             results(rs)
 
 

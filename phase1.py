@@ -58,7 +58,7 @@ while(True):
 		print('Could not open file %s for use. Make sure that is exists in this directory' % fileName)
 
 
-# TODO: add error checking, make sure input file is xml
+
 tree = ET.parse(inputFile)
 currId = 0
 Ids = []
@@ -88,12 +88,13 @@ for child in tree.iter():
 	if(child.tag == 'created_at'):
 		datesFile.write('%s:%s\n' % (child.text, currId))
 
+# gets info for the tweets.txt file
 inputFile.seek(0)
 line = inputFile.readline()
 while(not line.startswith("<status>")):
 	 line = inputFile.readline()
 
-
+# for each id, get xml data
 for Id in Ids:
 	record = Id + ":" + line
 	tweetsFile.write(record)
