@@ -92,7 +92,7 @@ def interface():
                     continue
                 # do name matching
                 else:
-                    idArray.append(p3terms.returnName(query))
+                    idArrays.append(p3terms.returnName(query))
                 
             elif (query.startswith("location:")):
                 query = query[9:]
@@ -106,7 +106,7 @@ def interface():
                     continue
                 # do location matching
                 else:
-                    idArray.append(p3terms.returnLocation(query))
+                    idArrays.append(p3terms.returnLocation(query))
                 
             elif (query.startswith("date:")):
                 query = query[5:]
