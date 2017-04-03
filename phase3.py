@@ -71,13 +71,13 @@ def interface():
                     if(not query[:-1].isalnum):
                         print('Query text must only contain alphanumeric characters! Rejecting query text:%s' % query)
                         continue
-                    idArrays.append(p3terms.returnTextWildcard(query[:-1]))
+                    idArrays.append(p3terms.returnTextWildcard(query[:-1].lower()))
                 elif(not query.isalnum()):
                     print('Rejecting query text:%s as it contains non alphanumeric characters!' % query)
                     continue
                 # do text matching
                 else:
-                    idArrays.append(p3terms.returnText(query))
+                    idArrays.append(p3terms.returnText(query.lower()))
                 
             
             elif (query.startswith("name:")):
@@ -86,13 +86,13 @@ def interface():
                     if(not query[:-1].isalnum):
                         print('Query text must only contain alphanumeric characters! Rejecting query name:%s' % query)
                         continue
-                    idArrays.append(p3terms.returnNameWildcard(query[:-1]))   
+                    idArrays.append(p3terms.returnNameWildcard(query[:-1].lower()))   
                 elif(not query.isalnum()):
                     print('Rejecting query name:%s as it contains non alphanumeric characters!' % query)
                     continue
                 # do name matching
                 else:
-                    idArrays.append(p3terms.returnName(query))
+                    idArrays.append(p3terms.returnName(query.lower()))
                 
             elif (query.startswith("location:")):
                 query = query[9:]
@@ -100,13 +100,13 @@ def interface():
                     if(not query[:-1].isalnum):
                         print('Query text must only contain alphanumeric characters! Rejecting query location:%s' % query)
                         continue
-                    idArrays.append(p3terms.returnLocWildcard(query[:-1])) 
+                    idArrays.append(p3terms.returnLocWildcard(query[:-1].lower())) 
                 elif(not query.isalnum()):
                     print('Rejecting query location:%s as it contains non alphanumeric characters!' % query)
                     continue
                 # do location matching
                 else:
-                    idArrays.append(p3terms.returnLocation(query))
+                    idArrays.append(p3terms.returnLocation(query.lower()))
                 
             elif (query.startswith("date:")):
                 query = query[5:]
@@ -138,13 +138,13 @@ def interface():
                         print('Non-prefixed queries must only contain alphanumeric characters! Rejecting query %s' % query)
                         continue
                     # do alphanum query matching with wildcard
-                    idArrays.append(p3terms.returnWildcard(query[:-1]))
+                    idArrays.append(p3terms.returnWildcard(query[:-1].lower()))
                 elif(not query.isalnum()):
                     print('Non-prefixed queries must only contain alphanumeric characters! Rejecting query %s' % query)
                     continue
                 # do non-wildcard alphanum matching
                 else:
-                    idArrays.append(p3terms.returnAny(query))
+                    idArrays.append(p3terms.returnAny(query.lower()))
 
         result = intersectResults(idArrays)
         for rs in result:
