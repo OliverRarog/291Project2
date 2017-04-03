@@ -17,6 +17,8 @@ def pullNames(text):
 	namesRe = re.findall('[0-9a-zA-Z_]+', text)
 	results = []
 	for name in namesRe:
+		if(len(name) < 3):
+			continue
 		results.append(name.lower())
 	return results
 
@@ -25,6 +27,8 @@ def pullLocations(text):
 	locsRe = re.findall('[0-9a-zA-Z_]+', text)
 	results = []
 	for loc in locsRe:
+		if(len(loc) < 3):
+			continue
 		results.append(loc.lower())
 	return results
 
